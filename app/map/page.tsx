@@ -145,7 +145,6 @@ export default function MapPage() {
                   className="card card-padded"
                   style={{
                     width: '100%', textAlign: 'left', cursor: 'pointer',
-                    borderLeft: `4px solid ${loc.color}`,
                     background: selected === loc.id ? 'color-mix(in srgb, var(--tud-blue) 4%, var(--bg-card))' : 'var(--bg-card)',
                     display: 'flex', alignItems: 'center', gap: '14px', border: `1px solid var(--border)`,
                     borderLeft: `4px solid ${loc.color}`,
