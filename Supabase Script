@@ -1,0 +1,144 @@
+-- საჭიროა for UUID generation
+create extension if not exists "pgcrypto";
+
+--------------------------------------------------
+-- TABLES
+--------------------------------------------------
+
+create table users (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text unique not null,
+  course text,
+  year integer,
+  created_at timestamp default now()
+);
+
+create table societies (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  description text,
+  category text,
+  created_at timestamp default now()
+);
+
+create table events (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  description text,
+  event_date timestamp not null,
+  location text,
+  society_id uuid references societies(id) on delete set null,
+  category text,
+  created_at timestamp default now()
+);
+
+create table reminders (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  event_id uuid references events(id) on delete cascade,
+  reminder_time timestamp,
+  created_at timestamp default now()
+);
+
+create table helpdesk_tickets (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references users(id) on delete cascade,
+  subject text not null,
+  message text not null,
+  status text default 'open',
+  created_at timestamp default now()
+);
+
+create table lost_found (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  description text,
+  location text,
+  status text default 'lost',
+  created_at timestamp default now()
+);
+
+--------------------------------------------------
+-- ENABLE RLS
+--------------------------------------------------
+
+alter table users enable row level security;
+alter table societies enable row level security;
+alter table events enable row level security;
+alter table reminders enable row level security;
+alter table helpdesk_tickets enable row level security;
+alter table lost_found enable row level security;
+
+--------------------------------------------------
+-- POLICIES (simple + suitable for CA level)
+--------------------------------------------------
+
+-- PUBLIC READ ACCESS (anyone can view data)
+create policy "Public read users"
+on users for select
+using (true);
+
+create policy "Public read societies"
+on societies for select
+using (true);
+
+create policy "Public read events"
+on events for select
+using (true);
+
+create policy "Public read lost_found"
+on lost_found for select
+using (true);
+
+-- INSERT ACCESS (anyone can add data - no auth required)
+create policy "Anyone can insert users"
+on users for insert
+with check (true);
+
+create policy "Anyone can insert helpdesk tickets"
+on helpdesk_tickets for insert
+with check (true);
+
+create policy "Anyone can insert lost_found"
+on lost_found for insert
+with check (true);
+
+create policy "Anyone can insert reminders"
+on reminders for insert
+with check (true);
+
+-- OPTIONAL: allow updating ticket status (basic)
+create policy "Allow update helpdesk"
+on helpdesk_tickets for update
+using (true);
+
+--------------------------------------------------
+-- SAMPLE DATA (fictional)
+--------------------------------------------------
+
+insert into users (name, email, course, year) values
+('Alex Murphy', 'alex.murphy@college.ie', 'Computer Science', 1),
+('Jamie Lee', 'jamie.lee@college.ie', 'Business', 2),
+('Taylor Smith', 'taylor.smith@college.ie', 'Engineering', 1);
+
+insert into societies (name, description, category) values
+('Tech Society', 'For students interested in coding and tech', 'Academic'),
+('Drama Club', 'Acting and theatre productions', 'Arts'),
+('Football Club', 'Weekly football training and matches', 'Sports');
+
+insert into events (title, description, event_date, location, category)
+values
+('Freshers Pizza Night', 'Meet new students and enjoy pizza', now() + interval '3 days', 'Main Hall', 'Social'),
+('Hackathon 2026', '24-hour coding challenge', now() + interval '10 days', 'Lab 2', 'Academic'),
+('Football Training', 'Weekly training session', now() + interval '2 days', 'Sports Hall', 'Sports');
+
+insert into helpdesk_tickets (subject, message, status)
+values
+('WiFi Issue', 'Cannot connect to campus WiFi', 'open'),
+('Library Access', 'Card not working at entrance', 'open');
+
+insert into lost_found (title, description, location, status)
+values
+('Lost Wallet', 'Black leather wallet', 'Cafeteria', 'lost'),
+('Found Keys', 'Set of keys with blue keychain', 'Library', 'found');
