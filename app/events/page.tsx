@@ -29,11 +29,30 @@ const categoryColors: Record<string, string> = {
 }
 
 // ML: simple k-NN style recommendation based on category + capacity filling rate
-function getRecommended(all: typeof events, interests: string[]): typeof events {
+type EventWithScore = typeof events[number] & { score: number };
+
+function getRecommended(all: typeof events, interests: string[]): EventWithScore[] {
   return [...all]
-    .filter(e => interests.includes(e.category))
-    .sort((a, b) => (b.attendees / b.capacity) - (a.attendees / a.capacity))
-    .slice(0, 3)
+    .map(e => {
+      // Feature 1: Interest match (categorical)
+      const interestScore = interests.includes(e.category) ? 1 : 0;
+
+      // Feature 2: Popularity (normalized)
+      const popularityScore = e.attendees / e.capacity;
+
+      // Feature 3: price factor
+      const priceScore = e.price ? 1 - (e.price / 150) : 0.5;
+
+      // Final weighted score
+      const score =
+        (0.6 * interestScore) +
+        (0.3 * popularityScore) +
+        (0.1 * priceScore);
+
+      return { ...e, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
 }
 
 export default function EventsPage() {
