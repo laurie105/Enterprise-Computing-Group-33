@@ -13,35 +13,43 @@ interface A11yContextType {
   updateSetting: <K extends keyof A11ySettings>(key: K, value: A11ySettings[K]) => void
 }
 
+const defaultSettings: A11ySettings = {
+  theme: 'light',
+  textSize: 'normal',
+  reducedMotion: false,
+  highContrast: false,
+}
+
+const getInitialSettings = (): A11ySettings => {
+  if (typeof window === 'undefined') return defaultSettings
+
+  const saved = window.localStorage.getItem('a11y-settings')
+  let initial = defaultSettings
+
+  if (saved) {
+    try {
+      initial = { ...initial, ...JSON.parse(saved) }
+    } catch {
+      initial = defaultSettings
+    }
+  }
+
+  return {
+    ...initial,
+    reducedMotion: initial.reducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    theme: initial.theme === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : initial.theme,
+  }
+}
+
 const A11yContext = createContext<A11yContextType>({
-  settings: { theme: 'light', textSize: 'normal', reducedMotion: false, highContrast: false },
+  settings: defaultSettings,
   updateSetting: () => {},
 })
 
 export const useA11y = () => useContext(A11yContext)
 
 export default function AccessibilityWrapper({ children }: { children: React.ReactNode }) {
-  const [settings, setSettings] = useState<A11ySettings>({
-    theme: 'light',
-    textSize: 'normal',
-    reducedMotion: false,
-    highContrast: false,
-  })
-
-  useEffect(() => {
-    const saved = localStorage.getItem('a11y-settings')
-    if (saved) {
-      try { setSettings(JSON.parse(saved)) } catch {}
-    }
-    // Respect OS prefers-reduced-motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setSettings(s => ({ ...s, reducedMotion: true }))
-    }
-    // Respect OS dark mode
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setSettings(s => ({ ...s, theme: 'dark' }))
-    }
-  }, [])
+  const [settings, setSettings] = useState<A11ySettings>(getInitialSettings)
 
   useEffect(() => {
     const html = document.documentElement

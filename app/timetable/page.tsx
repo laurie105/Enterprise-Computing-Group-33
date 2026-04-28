@@ -28,7 +28,7 @@ const moduleColors = [
 ]
 
 const moduleColorMap: Record<string, string> = {}
-timetableData.forEach((c, i) => {
+timetableData.forEach((c) => {
   if (!moduleColorMap[c.module_code]) {
     moduleColorMap[c.module_code] = moduleColors[Object.keys(moduleColorMap).length % moduleColors.length]
   }

@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { HelpCircle, CheckCircle, Clock, AlertCircle } from 'lucide-react'
+import { CheckCircle, Clock, AlertCircle } from 'lucide-react'
 
 type Status = 'open' | 'in-progress' | 'resolved'
 type Priority = 'low' | 'medium' | 'high'
