@@ -15,11 +15,11 @@ interface Reminder {
 }
 
 const initialReminders: Reminder[] = [
-  { id: 1, title: 'Assignment 1 Due', detail: 'CS1001 – Introduction to Programming', date: '2025-10-25', time: '23:59', type: 'deadline', done: false },
-  { id: 2, title: 'Coding Hackathon Sign-Up Deadline', detail: 'Register at SU office before 5pm', date: '2025-10-12', time: '17:00', type: 'event', done: true },
-  { id: 3, title: 'Study Group – Discrete Maths', detail: 'Room C302 with Niamh & Cormac', date: '2025-10-22', time: '14:00', type: 'academic', done: false },
-  { id: 4, title: 'Library Books Due Back', detail: 'Avoid late fees – return by closing time', date: '2025-10-28', time: '21:00', type: 'personal', done: false },
-  { id: 5, title: 'CA3 Design Report Draft', detail: 'Nature of Enterprise Computing – Group 33', date: '2025-11-01', time: '17:00', type: 'deadline', done: false },
+  { id: 1, title: 'Assignment 1 Due', detail: 'CS1001 – Introduction to Programming', date: '2026-10-25', time: '23:59', type: 'deadline', done: false },
+  { id: 2, title: 'Coding Hackathon Sign-Up Deadline', detail: 'Register at SU office before 5pm', date: '2026-10-12', time: '17:00', type: 'event', done: true },
+  { id: 3, title: 'Study Group – Discrete Maths', detail: 'Room C302 with Niamh & Cormac', date: '2026-10-22', time: '14:00', type: 'academic', done: false },
+  { id: 4, title: 'Library Books Due Back', detail: 'Avoid late fees – return by closing time', date: '2026-10-28', time: '21:00', type: 'personal', done: false },
+  { id: 5, title: 'CA3 Design Report Draft', detail: 'Nature of Enterprise Computing – Group 33', date: '2026-11-01', time: '17:00', type: 'deadline', done: false },
 ]
 
 const typeColors: Record<ReminderType, string> = {

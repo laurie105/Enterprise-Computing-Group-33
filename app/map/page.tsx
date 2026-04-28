@@ -108,7 +108,7 @@ export default function MapPage() {
 
           {selected && selectedLoc ? (
             /* Detail panel */
-            <div className="card card-padded fade-in" style={{ borderTop: `4px solid ${selectedLoc.color}`, marginBottom: '16px' }}>
+            <div id={`loc-detail-${selectedLoc.id}`} className="card card-padded fade-in" style={{ borderTop: `4px solid ${selectedLoc.color}`, marginBottom: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                 <div>
                   <h3 style={{ fontSize: '17px', fontWeight: 700 }}>{selectedLoc.name}</h3>

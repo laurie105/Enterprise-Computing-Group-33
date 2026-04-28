@@ -1,6 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { Sun, Moon } from 'lucide-react'
+import { Menu, Sun, Moon } from 'lucide-react'
 import { useA11y } from './AccessibilityWrapper'
 
 const titles: Record<string, { title: string; subtitle: string }> = {
@@ -15,16 +15,26 @@ const titles: Record<string, { title: string; subtitle: string }> = {
   '/accessibility-settings': { title: 'Accessibility Settings', subtitle: 'Customise your experience' },
 }
 
-export default function Topbar() {
+export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   const pathname = usePathname()
   const { settings, updateSetting } = useA11y()
   const page = titles[pathname] ?? { title: 'Campus Companion', subtitle: '' }
 
   return (
     <header className="topbar" role="banner">
-      <div>
-        <h1 className="topbar-title">{page.title}</h1>
-        {page.subtitle && <p className="topbar-subtitle">{page.subtitle}</p>}
+      <div className="topbar-heading">
+        <button
+          className="btn btn-ghost btn-icon mobile-menu-btn"
+          onClick={onMenuClick}
+          aria-label="Open navigation menu"
+          aria-controls="main-sidebar"
+        >
+          <Menu size={18} aria-hidden="true" />
+        </button>
+        <div>
+          <h1 className="topbar-title">{page.title}</h1>
+          {page.subtitle && <p className="topbar-subtitle">{page.subtitle}</p>}
+        </div>
       </div>
       <div className="topbar-actions">
         <button

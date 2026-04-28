@@ -2,20 +2,30 @@
 import { useState } from 'react'
 import { Search, Package, CheckCircle, Clock } from 'lucide-react'
 
-const items = [
-  { id: 1, name: 'Black Laptop Bag', description: 'Black Nike laptop bag with a yellow keyring. Contains charger.', dateReported: '2025-10-14', location: 'Library, 2nd Floor', status: 'unclaimed' },
-  { id: 2, name: 'Student ID Card', description: 'TUD student card for a student in the Computing faculty.', dateReported: '2025-10-16', location: 'Canteen', status: 'unclaimed' },
-  { id: 3, name: 'Blue Water Bottle', description: 'Hydroflask blue water bottle with stickers on it.', dateReported: '2025-10-18', location: 'Sports Hall', status: 'claimed' },
-  { id: 4, name: 'Glasses Case', description: 'Brown leather glasses case, empty.', dateReported: '2025-10-20', location: 'Block A Corridor', status: 'unclaimed' },
-  { id: 5, name: 'Scientific Calculator', description: 'Casio fx-85GT, name written inside lid.', dateReported: '2025-10-21', location: 'Maths Lecture Hall C3', status: 'unclaimed' },
-  { id: 6, name: 'Umbrella', description: 'Black folding umbrella.', dateReported: '2025-10-22', location: 'Main Reception', status: 'unclaimed' },
-  { id: 7, name: 'Airpods Case', description: 'White AirPods case, no earbuds inside.', dateReported: '2025-10-23', location: 'Library Ground Floor', status: 'unclaimed' },
-  { id: 8, name: 'Green Hoodie', description: 'Green college hoodie, size M.', dateReported: '2025-10-24', location: 'Gym Changing Room', status: 'claimed' },
+type LostItem = {
+  id: number
+  name: string
+  description: string
+  dateReported: string
+  location: string
+  status: 'unclaimed' | 'claimed'
+}
+
+const initialItems: LostItem[] = [
+  { id: 1, name: 'Black Laptop Bag', description: 'Black Nike laptop bag with a yellow keyring. Contains charger.', dateReported: '2026-10-14', location: 'Library, 2nd Floor', status: 'unclaimed' },
+  { id: 2, name: 'Student ID Card', description: 'TUD student card for a student in the Computing faculty.', dateReported: '2026-10-16', location: 'Canteen', status: 'unclaimed' },
+  { id: 3, name: 'Blue Water Bottle', description: 'Hydroflask blue water bottle with stickers on it.', dateReported: '2026-10-18', location: 'Sports Hall', status: 'claimed' },
+  { id: 4, name: 'Glasses Case', description: 'Brown leather glasses case, empty.', dateReported: '2026-10-20', location: 'Block A Corridor', status: 'unclaimed' },
+  { id: 5, name: 'Scientific Calculator', description: 'Casio fx-85GT, name written inside lid.', dateReported: '2026-10-21', location: 'Maths Lecture Hall C3', status: 'unclaimed' },
+  { id: 6, name: 'Umbrella', description: 'Black folding umbrella.', dateReported: '2026-10-22', location: 'Main Reception', status: 'unclaimed' },
+  { id: 7, name: 'Airpods Case', description: 'White AirPods case, no earbuds inside.', dateReported: '2026-10-23', location: 'Library Ground Floor', status: 'unclaimed' },
+  { id: 8, name: 'Green Hoodie', description: 'Green college hoodie, size M.', dateReported: '2026-10-24', location: 'Gym Changing Room', status: 'claimed' },
 ]
 
 type FormState = { name: string; description: string; location: string; email: string }
 
 export default function LostFoundPage() {
+  const [items, setItems] = useState<LostItem[]>(initialItems)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'unclaimed' | 'claimed'>('all')
   const [showForm, setShowForm] = useState(false)
@@ -35,9 +45,22 @@ export default function LostFoundPage() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    // In production this would POST to /api/lost-found
+    if (!form.name.trim() || !form.location.trim() || !form.email.trim()) return
+
+    const today = new Date().toISOString().split('T')[0]
+    const newItem: LostItem = {
+      id: Date.now(),
+      name: form.name.trim(),
+      description: form.description.trim() || 'No description provided.',
+      dateReported: today,
+      location: form.location.trim(),
+      status: 'unclaimed',
+    }
+
+    setItems(prev => [newItem, ...prev])
     setSubmitted(true)
     setShowForm(false)
+    setStatusFilter('all')
     setForm({ name: '', description: '', location: '', email: '' })
   }
 
@@ -71,7 +94,7 @@ export default function LostFoundPage() {
       {submitted && (
         <div className="alert alert-success" role="alert" aria-live="polite">
           <CheckCircle size={16} aria-hidden="true" />
-          Your item has been reported. Reception will be in touch at the email you provided.
+          Your item has been added to the demo Lost & Found list.
         </div>
       )}
 

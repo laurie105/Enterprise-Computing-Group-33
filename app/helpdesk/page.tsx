@@ -32,6 +32,7 @@ const emptyForm: FormData = { name: '', number: '', email: '', category: 'IT Sup
 
 export default function HelpdeskPage() {
   const [tab, setTab] = useState<'new' | 'existing'>('new')
+  const [tickets, setTickets] = useState(existingTickets)
   const [form, setForm] = useState<FormData>(emptyForm)
   const [submitted, setSubmitted] = useState(false)
   const [errors, setErrors] = useState<Partial<FormData>>({})
@@ -51,14 +52,26 @@ export default function HelpdeskPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!validate()) return
+
+    const newTicket = {
+      id: `TKT-${String(tickets.length + 1).padStart(3, '0')}`,
+      category: form.category,
+      subject: form.subject.trim(),
+      description: form.description.trim(),
+      status: 'open' as Status,
+      priority: form.priority,
+      created: new Date().toISOString().split('T')[0],
+    }
+
+    setTickets(prev => [newTicket, ...prev])
     setSubmitted(true)
     setForm(emptyForm)
     setErrors({})
   }
 
-  const open = existingTickets.filter(t => t.status === 'open').length
-  const inProgress = existingTickets.filter(t => t.status === 'in-progress').length
-  const resolved = existingTickets.filter(t => t.status === 'resolved').length
+  const open = tickets.filter(t => t.status === 'open').length
+  const inProgress = tickets.filter(t => t.status === 'in-progress').length
+  const resolved = tickets.filter(t => t.status === 'resolved').length
 
   return (
     <div className="fade-in">
@@ -103,7 +116,7 @@ export default function HelpdeskPage() {
           {submitted && (
             <div className="alert alert-success" role="alert" aria-live="polite">
               <CheckCircle size={16} aria-hidden="true" />
-              Your ticket has been submitted. You&apos;ll receive a confirmation at your email shortly.
+              Your ticket has been added to the demo ticket list.
             </div>
           )}
           <div className="card card-padded" style={{ maxWidth: '640px' }}>
@@ -159,7 +172,7 @@ export default function HelpdeskPage() {
       ) : (
         <div role="tabpanel" aria-label="My tickets">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {existingTickets.map(ticket => {
+            {tickets.map(ticket => {
               const st = statusConfig[ticket.status]
               const pr = priorityConfig[ticket.priority]
               return (

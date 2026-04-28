@@ -1,10 +1,19 @@
 import Link from 'next/link'
 import { BookOpen, Calendar, Map, UtensilsCrossed, Search, HelpCircle, Bell, Settings } from 'lucide-react'
+import { events } from '@/data/events'
+import { mondayClasses } from '@/data/timetable'
+
+const upcomingEvents = events.slice(1, 4).map(event => ({
+  date: new Date(event.date).toLocaleDateString('en-IE', { weekday: 'short', day: 'numeric', month: 'short' }),
+  title: event.title,
+  location: event.location,
+  category: event.category,
+}))
 
 // Fictional today summary data (no real data used)
 const quickStats = [
-  { label: "Today's Classes", value: '3', sub: 'Mon 9am–4pm', color: '#003087', bg: 'rgba(0,48,135,0.08)', icon: BookOpen },
-  { label: 'Upcoming Events', value: '5', sub: 'This week', color: '#06d6a0', bg: 'rgba(6,214,160,0.1)', icon: Calendar },
+  { label: "Today's Classes", value: String(mondayClasses.length), sub: 'Mon 9am–3pm', color: '#003087', bg: 'rgba(0,48,135,0.08)', icon: BookOpen },
+  { label: 'Upcoming Events', value: String(upcomingEvents.length), sub: 'Next campus events', color: '#06d6a0', bg: 'rgba(6,214,160,0.1)', icon: Calendar },
   { label: 'Open Tickets', value: '2', sub: 'Awaiting response', color: '#fb8500', bg: 'rgba(251,133,0,0.1)', icon: HelpCircle },
   { label: 'Lost Items', value: '6', sub: 'Awaiting claim', color: '#00b4d8', bg: 'rgba(0,180,216,0.1)', icon: Search },
 ]
@@ -20,17 +29,12 @@ const quickLinks = [
   { href: '/accessibility-settings', label: 'Accessibility', desc: 'Customise your experience', icon: Settings, color: '#8b93a7' },
 ]
 
-const todaysClasses = [
-  { time: '09:00–11:00', module: 'Introduction to Programming', room: 'B201', type: 'Lecture' },
-  { time: '13:00–15:00', module: 'Computer Architecture', room: 'A104', type: 'Lecture' },
-  { time: '15:00–16:00', module: 'Discrete Mathematics (Tutorial)', room: 'C302', type: 'Tutorial' },
-]
-
-const upcomingEvents = [
-  { date: 'Mon 15 Oct', title: 'Coding Hackathon 2025', location: 'Computer Lab Block B', category: 'Society' },
-  { date: 'Mon 20 Oct', title: 'Mental Health Awareness Seminar', location: 'Lecture Hall C1', category: 'Wellbeing' },
-  { date: 'Mon 3 Nov', title: 'Campus Art Exhibition', location: 'Atrium, Block D', category: 'Culture' },
-]
+const todaysClasses = mondayClasses.map(cls => ({
+  time: `${cls.start}–${cls.end}`,
+  module: cls.module_name,
+  room: cls.room,
+  type: cls.type,
+}))
 
 export default function DashboardPage() {
   return (

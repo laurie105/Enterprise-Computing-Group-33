@@ -24,11 +24,11 @@ const nav = [
   ]},
 ]
 
-export default function Sidebar() {
+export default function Sidebar({ open = false, onNavigate }: { open?: boolean; onNavigate?: () => void }) {
   const pathname = usePathname()
 
   return (
-    <nav className="sidebar" aria-label="Main navigation">
+    <nav id="main-sidebar" className={`sidebar${open ? ' open' : ''}`} aria-label="Main navigation">
       {/* Logo */}
       <div className="sidebar-logo">
         <div className="sidebar-logo-icon" aria-hidden="true">CC</div>
@@ -53,6 +53,7 @@ export default function Sidebar() {
                       href={link.href}
                       className={`sidebar-link${active ? ' active' : ''}`}
                       aria-current={active ? 'page' : undefined}
+                      onClick={onNavigate}
                     >
                       <Icon aria-hidden="true" />
                       {link.label}
