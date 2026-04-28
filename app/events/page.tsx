@@ -1,22 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { Calendar, MapPin, Users, Tag } from 'lucide-react'
-
-// Fictional events data
-const events = [
-  { id: 1, title: 'Freshers Week Welcome Talk', description: 'An introduction to TUD services, clubs, and supports for new students.', date: '2025-09-08', start: '10:00', end: '12:00', location: 'Main Hall, Block A', category: 'Academic', organiser: 'Student Services', capacity: 300, attendees: 245, tags: ['freshers', 'welcome', 'orientation'] },
-  { id: 2, title: 'Coding Hackathon 2025', description: '24-hour hackathon open to all computing students. Form teams and build something amazing!', date: '2025-10-15', start: '09:00', end: '09:00', location: 'Computer Lab Block B', category: 'Society', organiser: 'Computing Society', capacity: 60, attendees: 58, tags: ['hackathon', 'coding', 'computing'] },
-  { id: 3, title: 'Mental Health Awareness Week Seminar', description: 'Expert panel on student mental wellbeing and available supports.', date: '2025-10-20', start: '13:00', end: '15:00', location: 'Lecture Hall C1', category: 'Wellbeing', organiser: 'Student Union', capacity: 150, attendees: 87, tags: ['wellness', 'mental-health', 'support'] },
-  { id: 4, title: 'Campus Art Exhibition', description: 'Showcase of student artwork across all disciplines.', date: '2025-11-03', start: '11:00', end: '17:00', location: 'Atrium, Block D', category: 'Culture', organiser: 'Arts Society', capacity: 200, attendees: 130, tags: ['art', 'culture', 'exhibition'] },
-  { id: 5, title: 'CV Writing Workshop', description: 'Get tips from industry professionals on crafting the perfect CV.', date: '2025-11-10', start: '14:00', end: '16:00', location: 'Room A203', category: 'Career', organiser: 'Careers Office', capacity: 40, attendees: 39, tags: ['career', 'cv', 'workshop'] },
-  { id: 6, title: 'Table Quiz Night', description: 'Annual charity table quiz. Teams of 4, €5 per person.', date: '2025-11-17', start: '19:00', end: '22:00', location: 'Student Bar', category: 'Social', organiser: 'Student Union', capacity: 120, attendees: 96, tags: ['social', 'quiz', 'charity'] },
-  { id: 7, title: 'Data Science Guest Lecture', description: 'Industry guest from a Dublin tech firm talks about data pipelines.', date: '2025-11-24', start: '12:00', end: '13:00', location: 'Lecture Hall B2', category: 'Academic', organiser: 'Computing Society', capacity: 80, attendees: 54, tags: ['data', 'lecture', 'computing'] },
-  { id: 8, title: 'Sports Day 2025', description: 'Inter-class sports competition. Sign up your team at the SU office.', date: '2025-12-01', start: '10:00', end: '16:00', location: 'Sports Ground', category: 'Sport', organiser: 'Sports Society', capacity: 200, attendees: 177, tags: ['sport', 'fitness', 'competition'] },
-  { id: 9, title: 'Christmas Social', description: 'End of semester social with live music and food.', date: '2025-12-12', start: '18:00', end: '23:00', location: 'Student Bar & Courtyard', category: 'Social', organiser: 'Student Union', capacity: 250, attendees: 210, tags: ['social', 'christmas', 'music'] },
-  { id: 10, title: 'Spring Semester Orientation', description: 'Welcome back session for all returning students.', date: '2026-01-19', start: '10:00', end: '12:00', location: 'Main Hall, Block A', category: 'Academic', organiser: 'Student Services', capacity: 300, attendees: 180, tags: ['orientation', 'semester', 'returning'] },
-]
-
-const categories = ['All', 'Academic', 'Society', 'Wellbeing', 'Culture', 'Career', 'Social', 'Sport']
+import { events, eventCategories } from '@/data/events'
+import { recommendEvents } from '@/lib/recommender'
 
 const categoryColors: Record<string, string> = {
   Academic: 'badge-blue',
@@ -26,34 +12,6 @@ const categoryColors: Record<string, string> = {
   Career: 'badge-yellow',
   Social: 'badge-gray',
   Sport: 'badge-red',
-}
-
-// ML: simple k-NN style recommendation based on category + capacity filling rate
-type EventWithScore = typeof events[number] & { score: number };
-
-function getRecommended(all: typeof events, interests: string[]): EventWithScore[] {
-  return [...all]
-    .map(e => {
-      // Feature 1: Interest match (categorical)
-      const interestScore = interests.includes(e.category) ? 1 : 0;
-
-      // Feature 2: Popularity (normalized)
-      const popularityScore = e.attendees / e.capacity;
-
-      // Feature 3: recency proxy based on event date
-      const daysUntil = Math.max(0, (new Date(e.date).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-      const recencyScore = Math.max(0, 1 - (daysUntil / 365));
-
-      // Final weighted score
-      const score =
-        (0.6 * interestScore) +
-        (0.3 * popularityScore) +
-        (0.1 * recencyScore);
-
-      return { ...e, score };
-    })
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 3);
 }
 
 export default function EventsPage() {
@@ -69,7 +27,7 @@ export default function EventsPage() {
     return matchCat && matchSearch
   })
 
-  const recommended = getRecommended(events, userInterests)
+  const recommended = recommendEvents(events, userInterests)
 
   return (
     <div className="fade-in">
@@ -130,7 +88,7 @@ export default function EventsPage() {
             onChange={e => setCategory(e.target.value)}
             aria-label="Filter events by category"
           >
-            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+            {eventCategories.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
         <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
