@@ -40,14 +40,15 @@ function getRecommended(all: typeof events, interests: string[]): EventWithScore
       // Feature 2: Popularity (normalized)
       const popularityScore = e.attendees / e.capacity;
 
-      // Feature 3: price factor
-      const priceScore = e.price ? 1 - (e.price / 150) : 0.5;
+      // Feature 3: recency proxy based on event date
+      const daysUntil = Math.max(0, (new Date(e.date).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+      const recencyScore = Math.max(0, 1 - (daysUntil / 365));
 
       // Final weighted score
       const score =
         (0.6 * interestScore) +
         (0.3 * popularityScore) +
-        (0.1 * priceScore);
+        (0.1 * recencyScore);
 
       return { ...e, score };
     })
