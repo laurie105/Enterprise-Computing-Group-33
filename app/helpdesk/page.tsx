@@ -103,7 +103,7 @@ export default function HelpdeskPage() {
           {submitted && (
             <div className="alert alert-success" role="alert" aria-live="polite">
               <CheckCircle size={16} aria-hidden="true" />
-              Your ticket has been submitted. You'll receive a confirmation at your email shortly.
+              Your ticket has been submitted. You&apos;ll receive a confirmation at your email shortly.
             </div>
           )}
           <div className="card card-padded" style={{ maxWidth: '640px' }}>

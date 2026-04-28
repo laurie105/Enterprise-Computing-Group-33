@@ -114,7 +114,7 @@ export default function DashboardPage() {
         <section aria-labelledby="today-heading">
           <h2 id="today-heading" className="section-heading">
             <BookOpen size={20} aria-hidden="true" />
-            Today's Classes
+            Today&apos;s Classes
           </h2>
           <div className="card">
             {todaysClasses.map((cls, i) => (
