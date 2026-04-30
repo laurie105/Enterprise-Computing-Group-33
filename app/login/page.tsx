@@ -43,7 +43,7 @@ export default function LoginPage() {
     setError('')
 
     if (!form.full_name.trim()) return setError('Enter your full name.')
-    if (!/^C\d{8}$/i.test(form.student_number.trim())) return setError('Student number should look like C00123456.')
+    if (!/^[A-Z]\d{8}$/i.test(form.student_number.trim())) return setError('Student number must start with a letter followed by 8 digits.')
     if (!/\S+@\S+\.\S+/.test(form.email.trim())) return setError('Enter a valid email address.')
     if (!form.course) return setError('Choose your course.')
     if (!supabase) return setError('Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.')
@@ -94,7 +94,7 @@ export default function LoginPage() {
           <div className="grid-2">
             <div className="form-group">
               <label htmlFor="student-number" className="form-label">Student Number</label>
-              <input id="student-number" className="input" value={form.student_number} onChange={e => setForm({ ...form, student_number: e.target.value })} placeholder="C00123456" />
+              <input id="student-number" className="input" value={form.student_number} onChange={e => setForm({ ...form, student_number: e.target.value })} placeholder="Student number" />
             </div>
             <div className="form-group">
               <label htmlFor="year" className="form-label">Year</label>
