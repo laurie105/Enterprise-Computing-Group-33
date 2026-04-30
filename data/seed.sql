@@ -43,16 +43,16 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 INSERT INTO events (title, description, date, start_time, end_time, location, category, organiser, capacity, attendees, tags) VALUES
-('Freshers Week Welcome Talk', 'An introduction to TUD services, clubs, and supports for new students.', '2025-09-08', '10:00', '12:00', 'Main Hall, Block A', 'Academic', 'Student Services', 300, 245, ARRAY['freshers','welcome','orientation']),
-('Coding Hackathon 2025', '24-hour hackathon open to all computing students. Form teams and build something amazing!', '2025-10-15', '09:00', '09:00', 'Computer Lab Block B', 'Society', 'Computing Society', 60, 58, ARRAY['hackathon','coding','computing']),
-('Mental Health Awareness Week Seminar', 'Expert panel on student mental wellbeing and available supports.', '2025-10-20', '13:00', '15:00', 'Lecture Hall C1', 'Wellbeing', 'Student Union', 150, 87, ARRAY['wellness','mental-health','support']),
-('Campus Art Exhibition', 'Showcase of student artwork across all disciplines.', '2025-11-03', '11:00', '17:00', 'Atrium, Block D', 'Culture', 'Arts Society', 200, 130, ARRAY['art','culture','exhibition']),
-('CV Writing Workshop', 'Get tips from industry professionals on crafting the perfect CV.', '2025-11-10', '14:00', '16:00', 'Room A203', 'Career', 'Careers Office', 40, 39, ARRAY['career','cv','workshop']),
-('Table Quiz Night', 'Annual charity table quiz. Teams of 4, €5 per person.', '2025-11-17', '19:00', '22:00', 'Student Bar', 'Social', 'Student Union', 120, 96, ARRAY['social','quiz','charity']),
-('Data Science Guest Lecture', 'Industry guest from a Dublin tech firm talks about data pipelines.', '2025-11-24', '12:00', '13:00', 'Lecture Hall B2', 'Academic', 'Computing Society', 80, 54, ARRAY['data','lecture','computing']),
-('Sports Day 2025', 'Inter-class sports competition. Sign up your team at the SU office.', '2025-12-01', '10:00', '16:00', 'Sports Ground', 'Sport', 'Sports Society', 200, 177, ARRAY['sport','fitness','competition']),
-('Christmas Social', 'End of semester social with live music and food.', '2025-12-12', '18:00', '23:00', 'Student Bar & Courtyard', 'Social', 'Student Union', 250, 210, ARRAY['social','christmas','music']),
-('Spring Semester Orientation', 'Welcome back session for all returning students.', '2026-01-19', '10:00', '12:00', 'Main Hall, Block A', 'Academic', 'Student Services', 300, 180, ARRAY['orientation','semester','returning']);
+('Freshers Week Welcome Talk', 'An introduction to TUD services, clubs, and supports for new students.', '2026-09-08', '10:00', '12:00', 'Main Hall, Block A', 'Academic', 'Student Services', 300, 245, ARRAY['freshers','welcome','orientation']),
+('Coding Hackathon 2026', '24-hour hackathon open to all computing students. Form teams and build something amazing!', '2026-10-15', '09:00', '09:00', 'Computer Lab Block B', 'Society', 'Computing Society', 60, 58, ARRAY['hackathon','coding','computing']),
+('Mental Health Awareness Week Seminar', 'Expert panel on student mental wellbeing and available supports.', '2026-10-20', '13:00', '15:00', 'Lecture Hall C1', 'Wellbeing', 'Student Union', 150, 87, ARRAY['wellness','mental-health','support']),
+('Campus Art Exhibition', 'Showcase of student artwork across all disciplines.', '2026-11-03', '11:00', '17:00', 'Atrium, Block D', 'Culture', 'Arts Society', 200, 130, ARRAY['art','culture','exhibition']),
+('CV Writing Workshop', 'Get tips from industry professionals on crafting the perfect CV.', '2026-11-10', '14:00', '16:00', 'Room A203', 'Career', 'Careers Office', 40, 39, ARRAY['career','cv','workshop']),
+('Table Quiz Night', 'Annual charity table quiz. Teams of 4, €5 per person.', '2026-11-17', '19:00', '22:00', 'Student Bar', 'Social', 'Student Union', 120, 96, ARRAY['social','quiz','charity']),
+('Data Science Guest Lecture', 'Industry guest from a Dublin tech firm talks about data pipelines.', '2026-11-24', '12:00', '13:00', 'Lecture Hall B2', 'Academic', 'Computing Society', 80, 54, ARRAY['data','lecture','computing']),
+('Sports Day 2026', 'Inter-class sports competition. Sign up your team at the SU office.', '2026-12-01', '10:00', '16:00', 'Sports Ground', 'Sport', 'Sports Society', 200, 177, ARRAY['sport','fitness','competition']),
+('Christmas Social', 'End of semester social with live music and food.', '2026-12-12', '18:00', '23:00', 'Student Bar & Courtyard', 'Social', 'Student Union', 250, 210, ARRAY['social','christmas','music']),
+('Spring Semester Orientation', 'Welcome back session for all returning students.', '2027-01-19', '10:00', '12:00', 'Main Hall, Block A', 'Academic', 'Student Services', 300, 180, ARRAY['orientation','semester','returning']);
 
 -- CANTEEN MENU
 CREATE TABLE IF NOT EXISTS canteen_menu (
@@ -95,14 +95,14 @@ CREATE TABLE IF NOT EXISTS lost_found (
 );
 
 INSERT INTO lost_found (item_name, description, date_reported, location_found, status, contact_email) VALUES
-('Black Laptop Bag', 'Black Nike laptop bag with a yellow keyring. Contains charger.', '2025-10-14', 'Library, 2nd Floor', 'unclaimed', 'reception@tud-fictional.ie'),
-('Student ID Card', 'TUD student card for a student in the Computing faculty.', '2025-10-16', 'Canteen', 'unclaimed', 'reception@tud-fictional.ie'),
-('Blue Water Bottle', 'Hydroflask blue water bottle with stickers on it.', '2025-10-18', 'Sports Hall', 'claimed', 'reception@tud-fictional.ie'),
-('Glasses Case', 'Brown leather glasses case, empty.', '2025-10-20', 'Block A Corridor', 'unclaimed', 'reception@tud-fictional.ie'),
-('Scientific Calculator', 'Casio fx-85GT, name written inside lid.', '2025-10-21', 'Maths Lecture Hall C3', 'unclaimed', 'reception@tud-fictional.ie'),
-('Umbrella', 'Black folding umbrella.', '2025-10-22', 'Main Reception', 'unclaimed', 'reception@tud-fictional.ie'),
-('Airpods Case', 'White AirPods case, no earbuds inside.', '2025-10-23', 'Library Ground Floor', 'unclaimed', 'reception@tud-fictional.ie'),
-('Green Hoodie', 'Green college hoodie, size M.', '2025-10-24', 'Gym Changing Room', 'claimed', 'reception@tud-fictional.ie');
+('Black Laptop Bag', 'Black Nike laptop bag with a yellow keyring. Contains charger.', '2026-10-14', 'Library, 2nd Floor', 'unclaimed', 'reception@tud-fictional.ie'),
+('Student ID Card', 'TUD student card for a student in the Computing faculty.', '2026-10-16', 'Canteen', 'unclaimed', 'reception@tud-fictional.ie'),
+('Blue Water Bottle', 'Hydroflask blue water bottle with stickers on it.', '2026-10-18', 'Sports Hall', 'claimed', 'reception@tud-fictional.ie'),
+('Glasses Case', 'Brown leather glasses case, empty.', '2026-10-20', 'Block A Corridor', 'unclaimed', 'reception@tud-fictional.ie'),
+('Scientific Calculator', 'Casio fx-85GT, name written inside lid.', '2026-10-21', 'Maths Lecture Hall C3', 'unclaimed', 'reception@tud-fictional.ie'),
+('Umbrella', 'Black folding umbrella.', '2026-10-22', 'Main Reception', 'unclaimed', 'reception@tud-fictional.ie'),
+('Airpods Case', 'White AirPods case, no earbuds inside.', '2026-10-23', 'Library Ground Floor', 'unclaimed', 'reception@tud-fictional.ie'),
+('Green Hoodie', 'Green college hoodie, size M.', '2026-10-24', 'Gym Changing Room', 'claimed', 'reception@tud-fictional.ie');
 
 -- HELPDESK TICKETS
 CREATE TABLE IF NOT EXISTS helpdesk_tickets (

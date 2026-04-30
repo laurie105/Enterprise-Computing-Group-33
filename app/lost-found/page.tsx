@@ -140,7 +140,7 @@ export default function LostFoundPage() {
             <div className="form-group" style={{ marginBottom: '20px' }}>
               <label htmlFor="item-email" className="form-label">Your Email <span aria-hidden="true" style={{ color: 'var(--tud-red)' }}>*</span></label>
               <input id="item-email" className="input" required type="email" placeholder="your.email@student.tud.ie" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} aria-required="true" />
-              <span className="form-hint">Reception will contact you when the item is claimed.</span>
+              <span className="form-hint">Used only to make the demo form feel realistic. No email is sent.</span>
             </div>
             <button type="submit" className="btn btn-primary" disabled={!form.name || !form.location || !form.email}>
               Submit Report

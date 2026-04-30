@@ -6,11 +6,11 @@ type Status = 'open' | 'in-progress' | 'resolved'
 type Priority = 'low' | 'medium' | 'high'
 
 const existingTickets = [
-  { id: 'TKT-001', category: 'IT Support', subject: 'Cannot access Moodle', description: 'I get a login error when trying to access Moodle since yesterday morning.', status: 'in-progress' as Status, priority: 'high' as Priority, created: '2025-10-14' },
-  { id: 'TKT-002', category: 'Library', subject: 'Book reservation not showing', description: 'I reserved a book last week but it is not appearing in my account.', status: 'open' as Status, priority: 'medium' as Priority, created: '2025-10-16' },
-  { id: 'TKT-003', category: 'Finance', subject: 'Grant payment query', description: 'My SUSI grant has not been reflected in my fees account.', status: 'resolved' as Status, priority: 'high' as Priority, created: '2025-10-10' },
-  { id: 'TKT-004', category: 'Academic', subject: 'Timetable clash', description: 'My timetable shows two modules at the same time on Thursday.', status: 'open' as Status, priority: 'medium' as Priority, created: '2025-10-17' },
-  { id: 'TKT-005', category: 'IT Support', subject: 'Wi-Fi access issue', description: 'The eduroam Wi-Fi keeps disconnecting in Block B.', status: 'in-progress' as Status, priority: 'low' as Priority, created: '2025-10-18' },
+  { id: 'TKT-001', category: 'IT Support', subject: 'Cannot access Moodle', description: 'I get a login error when trying to access Moodle since yesterday morning.', status: 'in-progress' as Status, priority: 'high' as Priority, created: '2026-10-14' },
+  { id: 'TKT-002', category: 'Library', subject: 'Book reservation not showing', description: 'I reserved a book last week but it is not appearing in my account.', status: 'open' as Status, priority: 'medium' as Priority, created: '2026-10-16' },
+  { id: 'TKT-003', category: 'Finance', subject: 'Grant payment query', description: 'My SUSI grant has not been reflected in my fees account.', status: 'resolved' as Status, priority: 'high' as Priority, created: '2026-10-10' },
+  { id: 'TKT-004', category: 'Academic', subject: 'Timetable clash', description: 'My timetable shows two modules at the same time on Thursday.', status: 'open' as Status, priority: 'medium' as Priority, created: '2026-10-17' },
+  { id: 'TKT-005', category: 'IT Support', subject: 'Wi-Fi access issue', description: 'The eduroam Wi-Fi keeps disconnecting in Block B.', status: 'in-progress' as Status, priority: 'low' as Priority, created: '2026-10-18' },
 ]
 
 const statusConfig: Record<Status, { label: string; badge: string; icon: React.ReactNode }> = {
@@ -65,6 +65,7 @@ export default function HelpdeskPage() {
 
     setTickets(prev => [newTicket, ...prev])
     setSubmitted(true)
+    setTab('existing')
     setForm(emptyForm)
     setErrors({})
   }
@@ -171,6 +172,12 @@ export default function HelpdeskPage() {
         </div>
       ) : (
         <div role="tabpanel" aria-label="My tickets">
+          {submitted && (
+            <div className="alert alert-success" role="alert" aria-live="polite">
+              <CheckCircle size={16} aria-hidden="true" />
+              Your ticket has been added to the demo ticket list.
+            </div>
+          )}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {tickets.map(ticket => {
               const st = statusConfig[ticket.status]

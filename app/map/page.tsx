@@ -151,7 +151,7 @@ export default function MapPage() {
                   }}
                   onClick={() => setSelected(selected === loc.id ? null : loc.id)}
                   aria-expanded={selected === loc.id}
-                  aria-controls={`loc-detail-${loc.id}`}
+                  aria-controls={selected === loc.id ? `loc-detail-${loc.id}` : undefined}
                 >
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '3px', flexWrap: 'wrap' }}>
