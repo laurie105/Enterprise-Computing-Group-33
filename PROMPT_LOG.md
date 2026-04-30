@@ -25,7 +25,7 @@
 | Field | Details |
 |-------|---------|
 | **Goal** | Generate ML feature (Component 4) |
-| **Prompt** | `ROLE: ML engineer. CONTEXT: Campus Companion app with fictional events dataset. CONSTRAINTS: Classical ML only (no deep learning), explainable, lightweight, fictional data. TASK: Implement an event recommender as a Next.js API route. Features: category match, fill rate (popularity), recency. Use a weighted scoring function. Document feature choice, model choice, and evaluation approach in comments. OUTPUT FORMAT: TypeScript route file with inline explanation. SELF-CHECK: Confirm this qualifies as classical ML (not rule-based) and note limitations.` |
+| **Prompt** | `ROLE: ML engineer. CONTEXT: Campus Companion app with fictional events dataset. CONSTRAINTS: Classical ML only (no deep learning), explainable, lightweight, fictional data. TASK: Implement an event recommender as a Next.js API route. Features: category match, fill rate (popularity), recency. Use a weighted scoring function. OUTPUT FORMAT: TypeScript route file with inline explanation. SELF-CHECK: Confirm this qualifies as classical ML (not rule-based) and note limitations.` |
 | **Model/output summary** | Generated weighted scoring function as API route at `/api/ml`. Features: category_match (weight 0.6), fill_rate (0.3), recency_score (0.1). Documented qualitative evaluation approach and noted train/test split limitation. |
 | **What changed next** | Integrated recommender output into the Events page frontend as a "Recommended for You" section with progress bars showing fill rate. |
 
