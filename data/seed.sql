@@ -151,3 +151,34 @@ INSERT INTO campus_locations (name, category, description, building, floor, open
 ('Health Centre', 'Wellbeing', 'On-campus nurse and counselling service.', 'Block A', 'Ground Floor', 'Mon-Fri 09:00-17:00', '01-555-0108', 'health@fictional-tud.ie'),
 ('Printing Services', 'Academic', 'Print, scan, and photocopy. Student card payment only.', 'Block C', 'Ground Floor', 'Mon-Fri 08:30-18:00', '01-555-0109', 'print@fictional-tud.ie'),
 ('Main Reception', 'Admin', 'General enquiries, lost & found, visitor passes.', 'Block A', 'Ground Floor', 'Mon-Fri 08:00-18:00', '01-555-0110', 'reception@fictional-tud.ie');
+
+
+-- STUDENT LOGIN
+CREATE TABLE IF NOT EXISTS students (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  full_name TEXT NOT NULL,
+  student_number TEXT UNIQUE NOT NULL,
+  email TEXT NOT NULL,
+  course TEXT NOT NULL,
+  year TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+ALTER TABLE students ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Students can create their portal profile" ON students;
+CREATE POLICY "Students can create their portal profile"
+ON students FOR INSERT
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Students can update their portal profile" ON students;
+CREATE POLICY "Students can update their portal profile"
+ON students FOR UPDATE
+USING (true)
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Students can read their portal profile" ON students;
+CREATE POLICY "Students can read their portal profile"
+ON students FOR SELECT
+USING (true);

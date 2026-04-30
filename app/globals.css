@@ -246,12 +246,58 @@ input, textarea, select { font-family: var(--font); }
 .topbar-title { font-size: 20px; font-weight: 700; color: var(--text-primary); }
 .topbar-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
+.student-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+.student-chip small { color: var(--text-muted); font-size: 11px; }
 .sidebar-backdrop { display: none; }
 
 .page-body {
   padding: 28px;
   flex: 1;
 }
+
+/* Login */
+.login-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--tud-blue) 14%, transparent), transparent 34%),
+    var(--bg);
+}
+.login-card {
+  width: min(100%, 620px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+}
+.login-brand {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--tud-blue), var(--tud-blue-mid));
+  margin-bottom: 16px;
+}
+.login-kicker { color: var(--text-muted); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.login-card h1 { font-size: 28px; margin: 4px 0 6px; }
+.login-copy { color: var(--text-secondary); margin-bottom: 22px; }
+.login-form { display: flex; flex-direction: column; gap: 16px; }
 
 /* Cards */
 .card {
@@ -485,6 +531,7 @@ tbody tr:hover { background: color-mix(in srgb, var(--tud-blue) 3%, transparent)
     margin-left: 0;
   }
   .topbar { padding: 0 16px; }
+  .student-chip { display: none; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .grid-2 { grid-template-columns: 1fr; }

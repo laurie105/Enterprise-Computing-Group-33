@@ -142,3 +142,37 @@ insert into lost_found (title, description, location, status)
 values
 ('Lost Wallet', 'Black leather wallet', 'Cafeteria', 'lost'),
 ('Found Keys', 'Set of keys with blue keychain', 'Library', 'found');
+
+
+--------------------------------------------------
+-- STUDENT LOGIN TABLE
+--------------------------------------------------
+
+create table if not exists students (
+  id uuid primary key default gen_random_uuid(),
+  full_name text not null,
+  student_number text unique not null,
+  email text not null,
+  course text not null,
+  year text not null,
+  created_at timestamp default now(),
+  updated_at timestamp default now()
+);
+
+alter table students enable row level security;
+
+drop policy if exists "Students can create their portal profile" on students;
+create policy "Students can create their portal profile"
+on students for insert
+with check (true);
+
+drop policy if exists "Students can update their portal profile" on students;
+create policy "Students can update their portal profile"
+on students for update
+using (true)
+with check (true);
+
+drop policy if exists "Students can read their portal profile" on students;
+create policy "Students can read their portal profile"
+on students for select
+using (true);

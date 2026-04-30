@@ -1,6 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { Menu, Sun, Moon } from 'lucide-react'
+import { LogOut, Menu, Sun, Moon } from 'lucide-react'
+import type { StudentProfile } from './AppShell'
 import { useA11y } from './AccessibilityWrapper'
 
 const titles: Record<string, { title: string; subtitle: string }> = {
@@ -15,7 +16,15 @@ const titles: Record<string, { title: string; subtitle: string }> = {
   '/accessibility-settings': { title: 'Accessibility Settings', subtitle: 'Customise your experience' },
 }
 
-export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
+export default function Topbar({
+  onMenuClick,
+  student,
+  onLogout,
+}: {
+  onMenuClick: () => void
+  student: StudentProfile
+  onLogout: () => void
+}) {
   const pathname = usePathname()
   const { settings, updateSetting } = useA11y()
   const page = titles[pathname] ?? { title: 'Campus Companion', subtitle: '' }
@@ -37,6 +46,10 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         </div>
       </div>
       <div className="topbar-actions">
+        <div className="student-chip" title={`${student.full_name} · ${student.course}`}>
+          <span>{student.full_name}</span>
+          <small>{student.student_number}</small>
+        </div>
         <button
           className="btn btn-ghost btn-icon"
           onClick={() => updateSetting('theme', settings.theme === 'light' ? 'dark' : 'light')}
@@ -47,6 +60,9 @@ export default function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
             ? <Moon size={18} aria-hidden="true" />
             : <Sun size={18} aria-hidden="true" />
           }
+        </button>
+        <button className="btn btn-ghost btn-icon" onClick={onLogout} aria-label="Log out" title="Log out">
+          <LogOut size={18} aria-hidden="true" />
         </button>
       </div>
     </header>

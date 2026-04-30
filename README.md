@@ -22,7 +22,7 @@ Campus Companion is a Next.js web application that gives TUD students a single p
 | Language | TypeScript |
 | Styling | CSS (custom design system, no Tailwind) |
 | Icons | lucide-react |
-| Database (optional) | Supabase (PostgreSQL) |
+| Database | Supabase (PostgreSQL) for student login |
 | Deployment | Netlify (free tier) |
 | CI/CD | Git → Netlify auto-deploy on push to `main` |
 
@@ -82,7 +82,7 @@ npm install
 
 # 3. Set up environment variables
 cp .env.example .env.local
-# Edit .env.local with your Supabase credentials (optional – app works without them)
+# Edit .env.local with your Supabase URL and anon key
 
 # 4. Run the dev server
 npm run dev
@@ -90,13 +90,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### With Supabase (optional)
+### Supabase setup
 
 1. Create a free Supabase project at [supabase.com](https://supabase.com)
 2. Run the SQL in `data/seed.sql` in the Supabase SQL editor
 3. Copy your project URL and anon key into `.env.local`
 
-Without Supabase configured, the app uses its built-in fictional static data and works fully offline.
+The student login stores submitted student details in the `students` table. Course options are loaded from the TU Dublin A-Z undergraduate courses page through the app's `/api/courses` route.
 
 ---
 
