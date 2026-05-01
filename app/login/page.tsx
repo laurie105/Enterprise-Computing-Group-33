@@ -1,14 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { storeStudent, StudentProfile } from '@/components/AppShell'
 
 const years = ['1', '2', '3', '4']
 const fallbackCourses = ['Computer Science (TU856)', 'Computing (General Entry) (TU859)', 'Business Computing (TU914)']
 
 export default function LoginPage() {
-  const router = useRouter()
   const [courses, setCourses] = useState<string[]>([])
   const [loadingCourses, setLoadingCourses] = useState(true)
   const [submitting, setSubmitting] = useState(false)
@@ -55,7 +53,7 @@ export default function LoginPage() {
     }
 
     storeStudent(student)
-    router.replace('/')
+    window.location.href = '/'
   }
 
   return (
