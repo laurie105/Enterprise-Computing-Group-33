@@ -1,0 +1,35 @@
+Tester: User 2
+Focus: Timetable, Accessibility Settings and Canteen Menu
+
+Test method
+I asked the user to complete three tasks connected to readability and accessibility. I recorded the result, their feedback, the issues found and the improvements made.
+
+Tasks given
+1. Check the weekly timetable.
+2. Find the Accessibility Settings page.
+3. Check the canteen menu.
+
+Results
+The user completed all three tasks successfully. They found the main pages through the sidebar and understood the information shown on each page.
+
+User feedback
+- The timetable was useful and showed the main class information clearly.
+- Accessibility Settings were easy to find because they were included in the main Support section.
+- The canteen menu was clear, especially the food names, prices and dietary information.
+- The app felt consistent because the navigation stayed the same across pages.
+
+Issues found
+1. Timetable information needed clear spacing so it was easy to read.
+2. Accessibility Settings needed to stay visible in the main navigation.
+3. Canteen information needed to show price and dietary details clearly.
+
+Improvements made
+1. Timetable entries were kept structured with module, day, time, room and lecturer details.
+2. Accessibility Settings were kept as a main support page.
+3. Canteen items show price and dietary details clearly in the item cards.
+
+Link to presentation points
+This supports my presentation point that the WCAG checklist and user testing focused on readability, navigation, labels and clear page structure. It also supports the point that accessibility was treated as a main part of the app, not hidden away.
+
+Conclusion
+User 2 completed the tasks successfully. Their feedback helped improve readability, page structure and accessibility visibility.

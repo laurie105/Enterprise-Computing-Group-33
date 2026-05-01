@@ -1,0 +1,35 @@
+Tester: User 1
+Focus: Events, Helpdesk and Lost and Found
+
+Test method
+I asked the user to complete three realistic student tasks in the Campus Companion app. I recorded the result, their feedback, the issues found and the improvements made.
+
+Tasks given
+1. Find an upcoming campus event.
+2. Submit a helpdesk ticket.
+3. Find an item on the Lost and Found page.
+
+Results
+The user completed all three tasks successfully. They were able to use the sidebar to move between pages and understood the purpose of each section.
+
+User feedback
+- The Events page was easy to find from the sidebar.
+- Event details such as title, date, location and category were clear.
+- The Helpdesk form was understandable and simple to use.
+- The Lost and Found page was useful because the search field helped narrow down items.
+
+Issues found
+1. Event cards needed enough spacing so the information was easy to scan.
+2. Helpdesk feedback needed to be clear after using the form.
+3. Lost and Found item status needed to stand out more.
+
+Improvements made
+1. Event information was kept in clear card-style sections.
+2. Form feedback was made clearer so users understand what has happened.
+3. Lost and Found items use clear status information so users can quickly see the item state.
+
+Link to presentation points
+This supports my presentation point that testing helped improve form messages, status labels and page readability. It also shows that the consistent sidebar helped users move around the app easily.
+
+Conclusion
+User 1 completed the tasks successfully. Their feedback helped improve clarity around events, helpdesk feedback and Lost and Found statuses.

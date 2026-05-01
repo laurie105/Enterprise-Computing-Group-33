@@ -1,0 +1,35 @@
+Tester: User 3
+Focus: Student Login, Campus Map and Reminders
+
+Test method
+I asked the user to complete three tasks as a first-time student using the app. I recorded the result, their feedback, the issues found and the improvements made.
+
+Tasks given
+1. Log in using fictional student details.
+2. Find a campus service or location.
+3. Create a reminder.
+
+Results
+The user completed all three tasks successfully. They were able to enter the app through the demo login, use the Campus Map and create a reminder.
+
+User feedback
+- The login was easier to use when fictional details were accepted without a strict student number format.
+- The course list made the login page feel more realistic.
+- The Campus Map was useful because services such as reception, library and IT helpdesk were listed clearly.
+- The Reminders page was simple and direct.
+
+Issues found
+1. The student number field was too strict before the login was changed.
+2. The login needed to work reliably with fictional demo details.
+3. Campus service information needed clear names, categories and location details.
+4. The reminder form needed to stay simple.
+
+Improvements made
+1. The strict student number format was removed.
+2. The login now accepts fictional details and can also use demo details.
+3. The course list loads through the app from the TU Dublin A-Z courses page, with a fallback list included.
+4. Campus location cards include clear service names, categories and location information.
+5. The Reminders page keeps the task flow simple.
+
+Conclusion
+User 3 completed the tasks successfully. Their feedback helped improve the login flow, campus map clarity and reminder usability.
