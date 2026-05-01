@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
 import { storeStudent, StudentProfile } from '@/components/AppShell'
 
 const years = ['1', '2', '3', '4']
+const fallbackCourses = ['Computer Science (TU856)', 'Computing (General Entry) (TU859)', 'Business Computing (TU914)']
 
 export default function LoginPage() {
   const router = useRouter()
@@ -26,10 +26,12 @@ export default function LoginPage() {
       try {
         const response = await fetch('/api/courses')
         const data = await response.json()
-        setCourses(data.courses ?? [])
-        setForm(prev => ({ ...prev, course: data.courses?.[0] ?? '' }))
+        const loadedCourses = data.courses?.length ? data.courses : fallbackCourses
+        setCourses(loadedCourses)
+        setForm(prev => ({ ...prev, course: loadedCourses[0] ?? fallbackCourses[0] }))
       } catch {
-        setError('Could not load courses. Refresh and try again.')
+        setCourses(fallbackCourses)
+        setForm(prev => ({ ...prev, course: fallbackCourses[0] }))
       } finally {
         setLoadingCourses(false)
       }
@@ -38,40 +40,21 @@ export default function LoginPage() {
     loadCourses()
   }, [])
 
-  async function submit(e: React.FormEvent) {
+  function submit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
-
-    if (!form.full_name.trim()) return setError('Enter your full name.')
-    if (!/^[A-Z]\d{8}$/i.test(form.student_number.trim())) return setError('Student number must start with a letter followed by 8 digits.')
-    if (!/\S+@\S+\.\S+/.test(form.email.trim())) return setError('Enter a valid email address.')
-    if (!form.course) return setError('Choose your course.')
-    if (!supabase) return setError('Supabase is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.')
-
     setSubmitting(true)
 
-    const student = {
-      full_name: form.full_name.trim(),
-      student_number: form.student_number.trim().toUpperCase(),
-      email: form.email.trim().toLowerCase(),
-      course: form.course,
-      year: form.year,
+    const student: StudentProfile = {
+      id: 'fictional-student-demo',
+      full_name: form.full_name.trim() || 'Alex Murphy',
+      student_number: form.student_number.trim() || 'Fictional Student',
+      email: form.email.trim() || 'student@example.com',
+      course: form.course || fallbackCourses[0],
+      year: form.year || '1',
     }
 
-    const { data, error: supabaseError } = await supabase
-      .from('students')
-      .upsert(student, { onConflict: 'student_number' })
-      .select('id, full_name, student_number, email, course, year')
-      .single()
-
-    setSubmitting(false)
-
-    if (supabaseError) {
-      setError(supabaseError.message)
-      return
-    }
-
-    storeStudent(data)
+    storeStudent(student)
     router.replace('/')
   }
 
@@ -81,7 +64,7 @@ export default function LoginPage() {
         <div className="login-brand">CC</div>
         <p className="login-kicker">Campus Companion</p>
         <h1 id="login-heading">Student Login</h1>
-        <p className="login-copy">Enter your TU Dublin student details to access the portal.</p>
+        <p className="login-copy">Enter fictional student details, or leave fields blank to use demo details.</p>
 
         {error && <div className="alert alert-error" role="alert">{error}</div>}
 
@@ -94,7 +77,7 @@ export default function LoginPage() {
           <div className="grid-2">
             <div className="form-group">
               <label htmlFor="student-number" className="form-label">Student Number</label>
-              <input id="student-number" className="input" value={form.student_number} onChange={e => setForm({ ...form, student_number: e.target.value })} placeholder="Student number" />
+              <input id="student-number" className="input" value={form.student_number} onChange={e => setForm({ ...form, student_number: e.target.value })} placeholder="Any fictional student number" />
             </div>
             <div className="form-group">
               <label htmlFor="year" className="form-label">Year</label>
@@ -106,7 +89,7 @@ export default function LoginPage() {
 
           <div className="form-group">
             <label htmlFor="email" className="form-label">Email</label>
-            <input id="email" className="input" type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="name@student.tudublin.ie" />
+            <input id="email" className="input" type="text" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="Fictional email or contact" />
           </div>
 
           <div className="form-group">
@@ -114,10 +97,10 @@ export default function LoginPage() {
             <select id="course" className="select" value={form.course} onChange={e => setForm({ ...form, course: e.target.value })} disabled={loadingCourses}>
               {courses.map(course => <option key={course} value={course}>{course}</option>)}
             </select>
-            <span className="form-hint">Course names are loaded from the TU Dublin courses page.</span>
+            <span className="form-hint">Course is optional for the demo login.</span>
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={submitting || loadingCourses}>
+          <button type="submit" className="btn btn-primary" disabled={submitting}>
             {submitting ? 'Signing in…' : 'Enter Portal'}
           </button>
         </form>
